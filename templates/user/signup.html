@@ -1,0 +1,345 @@
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>{{user_type}} Registration</title>
+</head>
+
+<style>
+
+
+    .register{
+        background: -webkit-linear-gradient(left, #7b2b8e, #dc80ff);
+        margin-top: 3%;
+        padding: 3%;
+    }
+    .register-left{
+        text-align: center;
+        color: #fff;
+        margin-top: 4%;
+    }
+    .register-left input{
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        width: 60%;
+        background: #f8f9fa;
+        font-weight: bold;
+        color: #383d41;
+        margin-top: 30%;
+        margin-bottom: 3%;
+        cursor: pointer;
+    }
+    .register-right{
+        background: #f8f9fa;
+        border-top-left-radius: 10% 50%;
+        border-bottom-left-radius: 10% 50%;
+    }
+    .register-left img{
+        margin-top: 15%;
+        margin-bottom: 5%;
+        width: 25%;
+        -webkit-animation: mover 2s infinite  alternate;
+        animation: mover 1s infinite  alternate;
+    }
+    @-webkit-keyframes mover {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-20px); }
+    }
+    @keyframes mover {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-20px); }
+    }
+    .register-left p{
+        font-weight: lighter;
+        padding: 12%;
+        margin-top: -9%;
+    }
+    .register .register-form{
+        padding: 10%;
+        margin-top: 10%;
+    }
+    .btnRegister{
+        float: right;
+        margin-top: 10%;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #80059a;
+        color: #fff;
+        font-weight: 600;
+        width: 50%;
+        cursor: pointer;
+    }
+    .register .nav-tabs{
+        margin-top: 3%;
+        border: none;
+        background: #a0009b;
+        border-radius: 1.5rem;
+        width: 28%;
+        float: right;
+    }
+    .register .nav-tabs .nav-link{
+        padding: 2%;
+        height: 34px;
+        font-weight: 600;
+        color: #fff;
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+    }
+    .register .nav-tabs .nav-link:hover{
+        border: none;
+    }
+    .register .nav-tabs .nav-link.active{
+        width: 100px;
+        color: #a0009b;
+        border: 2px solid #a0009b;
+        border-top-left-radius: 1.5rem;
+        border-bottom-left-radius: 1.5rem;
+    }
+    .register-heading{
+        text-align: center;
+        margin-top: 8%;
+        margin-bottom: -15%;
+        color: #495057;
+    }
+
+    #address{
+        height: 145px;
+    }
+
+</style>
+
+
+
+<body>
+    
+
+
+<div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p></p>
+                        <input type="submit" href="{% url 'user:login' %}" value="Login" /><br/>
+                        
+                       
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            {% comment %} <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="{% url 'user:login' %}" role="tab" aria-controls="home" aria-selected="true">Employee</a>
+                            </li> {% endcomment %}
+                            {% comment %} <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Hirer</a>
+                            </li> {% endcomment %}
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h3 class="register-heading">Register for {{user_type}}</h3>
+
+
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+
+                                        {% if user_type == "Customer" %}
+
+                                        <div class="form-group">
+                                            {% render_field form.username class="form-control" placeholder="Username *" type="text" %}
+                                            {% comment %} <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" /> {% endcomment %}
+                                        </div>
+                                        {% if form.non_field_errors %}
+                                        {% for error in form.non_field_errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                        {% endif %}
+                                        
+                                        <div class="form-group">
+                                            {% comment %} <input type="password" class="form-control" placeholder="Password *" value="" /> {% endcomment %}
+                                            {% render_field form.password1 type="password" class="form-control" placeholder="Password *" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="password" class="form-control"  placeholder="Confirm Password *" value="" /> {% endcomment %}
+                                            {% render_field form.password2 type="password" class="form-control" placeholder="Confirm Password *" value="" %}
+
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="email" class="form-control" placeholder="Your Email *" value="" /> {% endcomment %}
+                                            {% render_field form.email type="email" class="form-control" placeholder="Your Email *" value="" %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            {% render_field form.address type="address" minlength="20" id="address" class="form-control" maxlength="500" name="address" placeholder="Address" %}
+                                        </div>
+
+
+                                        <!--
+                                        <div class="form-group">
+                                            <div class="maxl">
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="male" checked>
+                                                    <span> Male </span> 
+                                                </label>
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="female">
+                                                    <span>Female </span> 
+                                                </label>
+                                            </div>
+                                        </div>
+                                        -->
+
+                                        {% endif %}
+
+                                        {% if user_type == "Owner" %}
+
+                                        <div class="form-group">
+                                            {% render_field form.username class="form-control" placeholder="Username *" type="text" %}
+                                            {% comment %} <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" /> {% endcomment %}
+                                        </div>
+                                        {% for error in form.non_field_errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                        
+                                        {% for error in form.field_errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" class="form-control" placeholder="First Name *" value="" /> {% endcomment %}
+                                            {% render_field form.first_name type="text" class="form-control" placeholder="First Name" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" class="form-control" placeholder="Last Name *" value="" /> {% endcomment %}
+                                            {% render_field form.last_name type="text" class="form-control" placeholder="Last Name" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="password" class="form-control" placeholder="Password *" value="" /> {% endcomment %}
+                                            {% render_field form.password1 type="password" class="form-control" placeholder="Password *" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="password" class="form-control"  placeholder="Confirm Password *" value="" /> {% endcomment %}
+                                            {% render_field form.password2 type="password" class="form-control" placeholder="Confirm Password *" value="" %}
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            {% comment %} <input type="email" class="form-control" placeholder="Your Email *" value="" /> {% endcomment %}
+                                            {% render_field form.email type="email" class="form-control" placeholder="Your Email *" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" /> {% endcomment %}
+                                            {% render_field form.phone_number type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% render_field form.address type="address" minlength="20" id="address" class="form-control" maxlength="500" name="address" placeholder="Address" %}
+                                        </div>
+
+
+                                        <!--
+                                        <div class="form-group">
+                                            <div class="maxl">
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="male" checked>
+                                                    <span> Male </span> 
+                                                </label>
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="female">
+                                                    <span>Female </span> 
+                                                </label>
+                                            </div>
+                                        </div>
+                                        -->
+
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        {% if user_type == "Customer" %}
+
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" class="form-control" placeholder="First Name *" value="" /> {% endcomment %}
+                                            {% render_field form.first_name type="text" class="form-control" placeholder="First Name" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" class="form-control" placeholder="Last Name *" value="" /> {% endcomment %}
+                                            {% render_field form.last_name type="text" class="form-control" placeholder="Last Name" value="" %}
+                                        </div>
+                                       
+                                        
+                                        <div class="form-group">
+                                            {% comment %} <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" /> {% endcomment %}
+                                            {% render_field form.phone_number type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" %}
+                                        </div>
+                                        
+                                        
+                                        
+                                        {% endif %}
+
+
+                                        
+
+                                        {% if user_type == "Owner" %}
+
+                                        <div class="form-group">
+                                            {% render_field form.garage_name class="form-control" placeholder="Garage Name *" type="text" %}
+                                            {% comment %} <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" /> {% endcomment %}
+                                        </div>                                    
+                                                                                                                      
+                                        <div class="form-group">
+                                            {% comment %} <input type="email" class="form-control" placeholder="Your Email *" value="" /> {% endcomment %}
+                                            {% render_field form.garage_email type="email" class="form-control" placeholder="Garage Email *" value="" %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% render_field form.garage_address type="text" class="form-control" minlength="20" maxlength="500" name="address" placeholder="Garage Address" %}
+                                        </div>
+                                
+                                        {% endif %}
+                                
+
+                                        <!--
+                                        <div class="form-group">
+                                            <select class="form-control">
+                                                <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
+                                                <option>What is your Birthdate?</option>
+                                                <option>What is Your old Phone Number</option>
+                                                <option>What is your Pet Name?</option>
+                                            </select>
+                                        </div>
+                                        -->
+
+                                        {% comment %} <input type="submit" class="btnRegister"  value="Register"/> {% endcomment %}
+                                    </div>
+
+                                    {% for error in form.non_field_errors %}
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+                                
+                                {% for error in form.field_errors %}
+                                    <h1>pritesh</h1>
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+
+                                    <input type="submit" class="btnRegister"  value="Register"/>
+                                </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+</body>
+</html>
